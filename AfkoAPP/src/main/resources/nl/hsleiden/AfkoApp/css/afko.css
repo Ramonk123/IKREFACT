@@ -1,0 +1,96 @@
+* {
+    -fx-font-size: 1.5em;
+}
+.home{
+    -fx-padding: 2em;
+}
+.submit {
+    -fx-padding: 2em;
+}
+.game{
+    -fx-padding: 2em;
+}
+
+.admin{
+    -fx-padding: 2em;
+}
+
+.pane {
+    -fx-border-width: 1px;
+    -fx-border-color: #555;
+    -fx-padding: 1em;
+}
+
+/* just for debugging */
+.innerPane {
+    /* -fx-border-color: #000; */
+}
+
+
+.adminDisplayCard {
+    -fx-border-color: #000;
+    /* -fx-background-color: grey; */
+}
+
+.adminDisplayCard HBox {
+    -fx-padding: 0.5em;
+}
+
+
+.currentButton{
+    -fx-background-color: rgba(255,120,0,0.3);
+}
+.results{
+    -fx-padding: 0 1em;
+}
+Button:hover {
+    -fx-cursor: hand;
+}
+ComboBox:hover {
+    -fx-cursor: hand;
+}
+CheckBox:hover {
+    -fx-cursor: hand;
+}
+
+.jfx-snackbar-content {
+    -fx-background-color: #01689b;
+}
+
+.jfx-snackbar-content-false {
+    -fx-background-color: red;
+}
+
+.jfx-snackbar-toast {
+    -fx-text-fill: #eef7fb;
+    -fx-content-display: center;
+    -fx-text-alignment: center center;
+}
+
+.game-timer {
+
+    -fx-font-size: 3em;
+    -fx-border-width: 0.1em;
+    -fx-border-style: solid;
+}
+
+.game-end-screen {
+    -fx-font-size: 1.2em;
+    -fx-background-color: #01689b;
+    -fx-border-style: solid;
+    -fx-border-width: 5px;
+
+}
+.game-end-screen-box {
+    -fx-text-alignment: center center;
+    -fx-start-margin: 15px;
+    -fx-alignment: center;
+    -fx-spacing: 15px;
+}
+
+.game-end-screen-congrats {
+    -fx-font-size: 1.2em;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-spacing: 15px;
+}

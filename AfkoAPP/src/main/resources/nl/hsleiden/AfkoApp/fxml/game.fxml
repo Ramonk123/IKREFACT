@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.Screen?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ScrollPane?>
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="nl.hsleiden.AfkoApp.Views.GameView"
+           fx:id="root"
+           stylesheets="@../css/afko.css">
+
+    <fx:define>
+        <Screen fx:factory="getPrimary" fx:id="screen"/>
+    </fx:define>
+
+    <BorderPane fx:id="pane" prefHeight="${screen.visualBounds.height}" prefWidth="${screen.visualBounds.width}">
+        <top>
+            <BorderPane fx:id="header" prefWidth="${pane.width}" prefHeight="${pane.height*0.15}">
+                <left>
+                    <HBox>
+                        <Label prefHeight="${header.prefHeight*0.4}" prefWidth="${header.prefWidth*0.08}"/>
+                        <Label prefHeight="${header.prefHeight*0.4}" prefWidth="${header.prefWidth*0.08}"/>
+                        <Label prefHeight="${header.prefHeight*0.4}" prefWidth="${header.prefWidth*0.08}"/>
+                        <Label prefHeight="${header.prefHeight*0.4}" prefWidth="${header.prefWidth*0.08}"/>
+                    </HBox>
+                </left>
+                <center>
+                    <HBox alignment="CENTER">
+                        <ImageView preserveRatio="true" fitHeight="${header.prefHeight}">
+                            <Image url="@../assets/logo.png"/>
+                        </ImageView>
+                    </HBox>
+                </center>
+                <right>
+                    <HBox styleClass="navBar" alignment="BOTTOM_RIGHT">
+                        <Button styleClass="navButton" prefHeight="${header.prefHeight*0.4}"
+                                prefWidth="${header.prefWidth*0.08}" text="Afkotheek"
+                                onMouseClicked="#switchToAfkotheek"/>
+                        <Button styleClass="navButton" prefHeight="${header.prefHeight*0.4}"
+                                prefWidth="${header.prefWidth*0.08}" text="Afko Indienen"
+                                onMouseClicked="#switchToSubmit"/>
+                        <Button styleClass="navButton, currentButton" prefHeight="${header.prefHeight*0.4}"
+                                prefWidth="${header.prefWidth*0.08}" text="Game"/>
+                        <Button styleClass="navButton" prefHeight="${header.prefHeight*0.4}"
+                                prefWidth="${header.prefWidth*0.08}" text="Admin"
+                                onMouseClicked="#switchToAdmin"/>
+                    </HBox>
+                </right>
+            </BorderPane>
+        </top>
+
+        <center>
+            <BorderPane fx:id="game" styleClass="game" prefWidth="${pane.width}" prefHeight="${pane.height*0.85}">
+                <left>
+                    <BorderPane fx:id="testPane" styleClass="pane" prefHeight="${game.prefHeight*0.9}" prefWidth="${game.prefWidth*0.5}">
+                        <center>
+                            <Pane fx:id="innerPane" styleClass="innerPane" prefHeight="${game.prefHeight*0.9}" prefWidth="${game.prefWidth*0.5}">
+                                <HBox fx:id="gamepane" spacing="10" alignment="TOP_LEFT" prefWidth="${game.prefWidth*0.5}">
+                                    <VBox spacing="10" alignment="CENTER_LEFT" maxWidth="${gamepane.prefWidth*0.7}">
+                                        <HBox spacing="1">
+                                            <Label text="AFKO" textFill="orange" style="-fx-font-size: 2em;"/>
+                                            <Label text="Game" textFill="gray" style="-fx-font-size: 2em;"/>
+                                        </HBox>
+                                        <Label text="Raad zoveel mogelijk afkortingen in één minuut en word dé AFKO-kenner van de Rijksoverheid!" wrapText="true"/>
+                                        <HBox spacing ="4">
+                                            <TextField promptText="Naam" fx:id="usernameTextField" onAction="#startGame"/>
+                                            <ComboBox fx:id="departmentfilter"/>
+                                        </HBox>
+                                        <Button text="Start Game" onMouseClicked="#startGame"/>
+                                    </VBox>
+                                </HBox>
+
+                            </Pane>
+                        </center>
+                    </BorderPane>
+                </left>
+
+                <right>
+                    <BorderPane styleClass="pane" prefHeight="${game.prefHeight}" prefWidth="${game.prefWidth*0.3}">
+                        <center>
+                            <Pane styleClass="innerPane">
+                                <HBox fx:id="scorePane">
+                                    <VBox spacing="10" alignment="CENTER_LEFT" maxWidth="${gamepane.prefWidth*0.7}">
+                                        <HBox spacing="1">
+                                            <Label text="High" textFill="orange" style="-fx-font-size: 2em;"/>
+                                            <Label text="scores" textFill="gray" style="-fx-font-size: 2em;"/>
+                                        </HBox>
+
+                                        <ScrollPane fx:id="highscores" prefHeight="${game.prefHeight*0.85}"
+                                                    prefWidth="${game.prefWidth*0.3}">
+                                            <HBox prefWidth="${highscores.prefWidth}">
+
+                                                    <VBox spacing="2" fx:id="ranks" styleClass="results"/>
+
+                                                    <VBox spacing="2" fx:id="names" styleClass="results" alignment="CENTER_LEFT"/>
+
+                                                    <VBox spacing="2" fx:id="scores" styleClass="results" alignment="CENTER_RIGHT"/>
+
+                                                    <VBox spacing="2" fx:id="reports" alignment="CENTER_RIGHT"/>
+
+                                            </HBox>
+                                        </ScrollPane>
+
+                                    </VBox>
+
+
+
+                                </HBox>
+
+                            </Pane>
+                        </center>
+                    </BorderPane>
+                </right>
+            </BorderPane>
+        </center>
+    </BorderPane>
+</StackPane>
