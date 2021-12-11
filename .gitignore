@@ -1,0 +1,71 @@
+AFKOAPI/src/main/resources/HELP.md
+AFKOAPI/target/
+AFKOAPI//src/main/resources/application.properties
+AFKOAPI/.mvn/wrapper/maven-wrapper.jar
+AFKOAPI/**/src/main/**/target/
+AFKOAPI/**/src/test/**/target/
+AFKOAPI/src/main/resources/keystore/afkoapi.p12
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+AFKOAPI//nbproject/private/
+AFKOAPI//nbbuild/
+AFKOAPI//dist/
+AFKOAPI//nbdist/
+AFKOAPI//.nb-gradle/
+AFKOAPI/build/
+AFKOAPI/**/src/main/**/build/
+AFKOAPI/**/src/test/**/build/
+
+### VS Code ###
+AFKOAPI/.vscode/
+
+AFKOAPP/src/main/resources/HELP.md
+AFKOAPP/target/
+AFKOAPP//src/main/resources/application.properties
+AFKOAPP/.mvn/wrapper/maven-wrapper.jar
+AFKOAPP/**/src/main/**/target/
+AFKOAPP/**/src/test/**/target/
+AFKOAPP/src/main/resources/keystore/AFKOAPP.p12
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+AFKOAPP//nbproject/private/
+AFKOAPP//nbbuild/
+AFKOAPP//dist/
+AFKOAPP//nbdist/
+AFKOAPP//.nb-gradle/
+AFKOAPP/build/
+AFKOAPP/**/src/main/**/build/
+AFKOAPP/**/src/test/**/build/
+
+### VS Code ###
+AFKOAPP/.vscode/
