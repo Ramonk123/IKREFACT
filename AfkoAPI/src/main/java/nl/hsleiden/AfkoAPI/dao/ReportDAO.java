@@ -1,16 +1,20 @@
 package nl.hsleiden.AfkoAPI.dao;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import nl.hsleiden.AfkoAPI.models.AbbreviationReport;
+import nl.hsleiden.AfkoAPI.models.GameScore;
 import nl.hsleiden.AfkoAPI.models.GameScoreReport;
 import nl.hsleiden.AfkoAPI.repositories.AbbreviationReportCountRepository;
 import nl.hsleiden.AfkoAPI.repositories.AbbreviationReportRepository;
 import nl.hsleiden.AfkoAPI.repositories.GameScoreReportCountRepository;
 import nl.hsleiden.AfkoAPI.repositories.GameScoreReportRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.sql.Date;
 import java.util.*;
 
 /**
@@ -99,9 +103,9 @@ public class ReportDAO {
      */
     public String removeGameScoreReport(GameScoreReport gameScoreReport) {
         String reportId = gameScoreReport.getGameScoreReportId().toString();
-        String reportedUsername = gameScoreReport.getGameScore().getUsername();
+        UUID reportedScoreId = gameScoreReport.getGameScoreId();
 
-        GAME_SCORE_REPORT_REPOSITORY.deleteAllReportsByGameScoreId(gameScoreReport.getGameScore().getId());
-        return String.format("Gamescore report %s with username %s was deleted from the database", reportId, reportedUsername);
+        GAME_SCORE_REPORT_REPOSITORY.deleteAllReportsByGameScoreId(gameScoreReport.getGameScoreId());
+        return String.format("Gamescore report %s with gameScoreId %s was deleted from the database", reportId, reportedScoreId);
     }
 }

@@ -1,23 +1,25 @@
 package nl.hsleiden.AfkoAPI.controllers;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import nl.hsleiden.AfkoAPI.dao.AbbreviationDAO;
 import nl.hsleiden.AfkoAPI.dao.GameDAO;
 import nl.hsleiden.AfkoAPI.dao.ReportDAO;
 import nl.hsleiden.AfkoAPI.exceptions.IncorrectBodyException;
-import nl.hsleiden.AfkoAPI.exceptions.NoParamsUsedException;
-import nl.hsleiden.AfkoAPI.exceptions.ReportNotFoundException;
 import nl.hsleiden.AfkoAPI.httpResponses.Response;
 import nl.hsleiden.AfkoAPI.models.Abbreviation;
 import nl.hsleiden.AfkoAPI.models.AbbreviationReport;
 import nl.hsleiden.AfkoAPI.models.GameScore;
 import nl.hsleiden.AfkoAPI.models.GameScoreReport;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.sql.Date;
 import java.util.*;
 
 /**
@@ -107,12 +109,25 @@ public class ReportController {
 
         for (Map<String, Object> map : REPORT_DAO.getGameScoreReports()) {
             HashMap<String, Object> entry = new HashMap<>();
-
             for (String key : map.keySet()) {
                 entry.put(key, map.get(key));
             }
 
-            entry.put("game_score", GAME_DAO.getScoreFromId(UUID.fromString((String) entry.get("game_score_id"))));
+            // Code smell?
+            String URL = "http://localhost:8444/scoreboard/";
+            try {
+                HttpResponse<JsonNode> request = Unirest.get(URL+entry.get("game_score_id")).asJson();
+                JSONObject jsonObject = request.getBody().getObject();
+
+                GameScore gameScore = new GameScore(
+                        UUID.fromString(jsonObject.getString("id")),
+                        jsonObject.getString("username"),
+                        jsonObject.getInt("score")
+                );
+                entry.put("game_score", gameScore);
+            } catch (UnirestException e) {
+                e.printStackTrace();
+            }
             entry.remove("game_score_id");
 
             result.add(entry);
@@ -146,8 +161,8 @@ public class ReportController {
         try {
             REPORT_DAO.removeGameScoreReport(gameScoreReport);
 
-            GameScore gameScore = gameScoreReport.getGameScore();
-            String responseMessage = String.format("Deleted gamescore report %s with gamescore: %s, %s", gameScoreReport.getGameScoreReportId(), gameScore.getUsername(), gameScore.getScore());
+            UUID gameScoreId = gameScoreReport.getGameScoreId();
+            String responseMessage = String.format("Deleted gamescore report %s with gamescoreid: %s", gameScoreReport.getGameScoreReportId(), gameScoreId);
             return ResponseEntity.ok(new Response(responseMessage));
         } catch(NullPointerException npe) {
             throw new IncorrectBodyException();

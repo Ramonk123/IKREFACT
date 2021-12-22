@@ -1,29 +1,29 @@
  MicroService:
-   ☐ Database
+   ✔ Database @done (22-12-21 14:19)
      ✔ createdb(i already have a sql file) @done (21-12-21 21:36)
-     ☐ link microservice to new db
-       ☐ think about abbreviaiton and departments
-         - We could just douplicate the data to new db
-         - We could use http cals to fetch data
-         - We could do something else
+     ✔ link microservice to new db @done (22-12-21 14:19)
+       ✔ think about abbreviaiton and departments @done (22-12-21 14:18)
+         ✔ We could just douplicate the data to new db
+         // We could use http cals to fetch data
+         // We could do something else
 
 
-   ☐ Service
-     ☐ setup a springboot project
-     ☐ create controllers
+   ✔ Service @done (22-12-21 16:00)
+     ✔ setup a springboot project @done (22-12-21 14:18)
+     ✔ create controllers @done (22-12-21 16:00)
        // examples of possible controllers:
        //   -Game
        //   -GameScore
        //   -GameReport
-     ☐ create dao's
-     ☐ create repo's
+     ✔ create dao's @done (22-12-21 16:00)
+     ✔ create repo's @done (22-12-21 16:00)
      // we prob need to do authentication for reports :'(
      // or we could not; cause our only focus is game and not gameReports
 
 
-   ☐ GateWay
+   ✔ GateWay @done (22-12-21 14:19)
      ✔ install nginx @done (21-12-21 21:35)
-     ☐ configure gateway(very easy)
+     ✔ configure gateway(very easy) @done (22-12-21 14:18)
 
 
 Readers:

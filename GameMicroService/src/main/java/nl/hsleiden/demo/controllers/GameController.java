@@ -32,6 +32,11 @@ import java.util.UUID;
             return GAME_DAO.checkAnswer(gamequestion);
         }
 
+        @GetMapping("/scoreboard/{id}")
+        public Optional<GameScore> getScore(@PathVariable UUID id) {
+            return GAME_DAO.getScoreFromId(id);
+        }
+
         /**
          * gets gameScores
          * @author Max Mulder
@@ -97,23 +102,23 @@ import java.util.UUID;
         }
 
 
-        /**
-         * Gets gameQuestions based on distinct and a limit, default limit is 10
-         * @author Max Mulder
-         * @param id
-         * @param limit
-         * @return
-         */
-        @GetMapping("/questions/{id}")
-        public List<GameQuestion> getGameQuestions(@PathVariable(value = "id", required = false) Optional<String> id, @RequestParam(value = "limit", required = false) Optional<Integer> limit) {
-
-            if (id.isPresent() && limit.isPresent()) {
-                return GAME_DAO.getRandomQuestions("%" + id.get() + "%", limit.get());
-            }
-            if (id.isPresent()) {return GAME_DAO.getRandomQuestions("%" + id.get() + "%");}
-            if (limit.isPresent()) {return GAME_DAO.getRandomQuestions(limit.get());}
-            return GAME_DAO.getRandomQuestions();
-        }
+//        /**
+//         * Gets gameQuestions based on distinct and a limit, default limit is 10
+//         * @author Max Mulder
+//         * @param id
+//         * @param limit
+//         * @return
+//         */
+//        @GetMapping("/questions/{id}")
+//        public List<GameQuestion> getGameQuestions(@PathVariable(value = "id", required = false) Optional<String> id, @RequestParam(value = "limit", required = false) Optional<Integer> limit) {
+//
+//            if (id.isPresent() && limit.isPresent()) {
+//                return GAME_DAO.getRandomQuestions("%" + id.get() + "%", limit.get());
+//            }
+//            if (id.isPresent()) {return GAME_DAO.getRandomQuestions("%" + id.get() + "%");}
+//            if (limit.isPresent()) {return GAME_DAO.getRandomQuestions(limit.get());}
+//            return GAME_DAO.getRandomQuestions();
+//        }
 
     }
 

@@ -117,4 +117,3 @@ AfkoApp/**/src/test/**/build/
 AfkoApp/.vscode/
 /AfkoAPI/src/main/resources/application.properties
 /GameMicroService/src/main/resources/application.properties
-/GameMicroService/target/classes/application.properties
