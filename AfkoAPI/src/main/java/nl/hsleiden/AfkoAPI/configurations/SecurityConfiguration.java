@@ -46,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        final String PATH = "/api/v1";
+        final String PATH = "/api";
         final String ADMIN = "ADMIN";
         final String AUTHORIZED_USER = "AUTHORIZED";
         http.cors().and().csrf().disable()
@@ -61,9 +61,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                    .antMatchers(HttpMethod.POST, PATH+"/reports/**").permitAll()
 //                    .antMatchers(PATH+"/authorizedUser/**", PATH+"/authenticate/**", PATH+"/admin/**", PATH+"/user/**").permitAll()
                 // and remove this ↓ line in final
-                    .antMatchers(PATH, PATH+"/authenticate/**", PATH+"/departments/**",
-                                                PATH+"/abbreviations/**", PATH+"/game/**", PATH+"/reports/**",
-                                                PATH+"/authorizedUser/**", PATH+"/user/**", PATH+"/admin/**").permitAll()
+//                    .antMatchers(PATH, PATH+"/authenticate/**", PATH+"/departments/**",
+//                                                PATH+"/abbreviations/**", PATH+"/game/**", PATH+"/reports/**",
+//                                                PATH+"/authorizedUser/**", PATH+"/user/**", PATH+"/admin/**").permitAll()
                 .anyRequest().anonymous()
 
                 .and().sessionManagement()

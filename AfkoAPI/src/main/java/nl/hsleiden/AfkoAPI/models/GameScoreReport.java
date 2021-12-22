@@ -13,27 +13,28 @@ public class GameScoreReport {
     @Column(columnDefinition = "BINARY(16)")
     private UUID gameScoreReportId;
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private GameScore gameScore;
+//    @ManyToOne
+//    @JoinColumn(nullable = false)
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID gameScoreId;
     private String message;
     private Timestamp added;
 
     public GameScoreReport() {}
 
-    public GameScoreReport(GameScore score, UUID scoreReportId, String message, Timestamp added) {
-        this.gameScore = score;
+    public GameScoreReport(UUID score, UUID scoreReportId, String message, Timestamp added) {
+        this.gameScoreId = score;
         this.gameScoreReportId = scoreReportId;
         this.message = message;
         this.added = added;
     }
 
-    public GameScore getGameScore() {
-        return gameScore;
+    public UUID getGameScoreId() {
+        return gameScoreId;
     }
 
-    public void setGameScore(GameScore gameScore) {
-        this.gameScore = gameScore;
+    public void setGameScore(UUID gameScore) {
+        this.gameScoreId = gameScore;
     }
 
     public UUID getGameScoreReportId() {

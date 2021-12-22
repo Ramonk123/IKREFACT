@@ -116,3 +116,4 @@ AfkoApp/**/src/test/**/build/
 ### VS Code ###
 AfkoApp/.vscode/
 /AfkoAPI/src/main/resources/application.properties
+/GameMicroService/src/main/resources/application.properties
