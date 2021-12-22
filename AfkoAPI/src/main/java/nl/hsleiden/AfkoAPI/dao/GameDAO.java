@@ -65,17 +65,6 @@ public class GameDAO {
      */
     public List<GameQuestion> getRandomQuestions(int limit) {return GAME_QUESTION_REPOSITORY.getRandomQuestions(limit);}
 
-    /**
-     * @author Max Mulder
-     * @return
-     */
-    public List<GameQuestion> getRandomQuestions(String id) {return GAME_QUESTION_REPOSITORY.getRandomQuestionsDEP(id);}
-
-    /**
-     * @author Max Mulder
-     * @return
-     */
-    public List<GameQuestion> getRandomQuestions(String id, int limit) {return GAME_QUESTION_REPOSITORY.getRandomQuestionsDEP(id, limit);}
 
     /**
      * Post a gameScore to the database

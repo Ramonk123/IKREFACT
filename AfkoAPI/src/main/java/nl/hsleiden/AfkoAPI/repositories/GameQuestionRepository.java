@@ -22,10 +22,4 @@ public interface GameQuestionRepository extends JpaRepository<GameQuestion, Stri
 
     @Query(value = "SELECT abbreviation_name, definition FROM question_view ORDER BY RAND() LIMIT :limit ;", nativeQuery = true)
     List<GameQuestion> getRandomQuestions(@Param("limit") int limit);
-
-    @Query(value = "SELECT abbreviation_name, definition FROM question_view WHERE departments LIKE :id ORDER BY RAND() LIMIT 10;", nativeQuery = true)
-    List<GameQuestion> getRandomQuestionsDEP(@Param("id") String id);
-
-    @Query(value = "SELECT abbreviation_name, definition FROM question_view WHERE departments LIKE :id ORDER BY RAND() LIMIT :limit ;", nativeQuery = true)
-    List<GameQuestion> getRandomQuestionsDEP(@Param("id") String id, @Param("limit") int limit);
 }
