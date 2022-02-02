@@ -130,8 +130,8 @@ public class AbbreviationController {
     * @return List of added Abbreviations
     */
     @PostMapping("/CSV")
-//    @Secured("ROLE_ADMIN")
-    public List<Abbreviation> postAbbreviations(@RequestBody Optional<String> abbreviationCsv,
+    @Secured("ROLE_ADMIN")
+    public List<Abbreviation> postAbbreviationsByCSV(@RequestBody Optional<String> abbreviationCsv,
                                                 @RequestParam("separator") Optional<String> separator,
                                                 @RequestParam("depSeparator") Optional<String> depSeparator)
             throws CSVException, DepartmentDoesntExistException {
@@ -139,6 +139,6 @@ public class AbbreviationController {
         if (separator.isEmpty()) {separator = Optional.of(",");}
         if (depSeparator.isEmpty()) {depSeparator = Optional.of(";");}
 
-        return ABBREVIATION_DAO.postAbbreviations(CSV_PARSER.Parse(abbreviationCsv.get(), separator.get(), depSeparator.get()));
+        return ABBREVIATION_DAO.postAbbreviations(CSV_PARSER.parseCSV(abbreviationCsv.get(), separator.get(), depSeparator.get()));
     }
 }

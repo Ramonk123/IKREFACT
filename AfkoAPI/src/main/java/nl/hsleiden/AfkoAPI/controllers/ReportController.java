@@ -116,7 +116,7 @@ public class ReportController {
             // Code smell?
             String URL = "http://localhost:8444/scoreboard/";
             try {
-                HttpResponse<JsonNode> request = Unirest.get(URL+entry.get("game_score_id")).asJson();
+                HttpResponse<JsonNode> request = Unirest.get(URL+ map.get("game_score_id")).asJson();
                 JSONObject jsonObject = request.getBody().getObject();
 
                 GameScore gameScore = new GameScore(

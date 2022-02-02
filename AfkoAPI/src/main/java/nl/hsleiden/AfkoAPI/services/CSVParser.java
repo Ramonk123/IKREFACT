@@ -105,41 +105,42 @@ public class CSVParser {
      * Converts a CSV into a list of Abbreviations
      * @param CSV CSV in string form
      * @param separator Char on which the string columns will be split
-     * @param depseparator Char on which the string departments will be split
+     * @param depSeperator Char on which the string departments will be split
      * @return List of Abbreviations
      */
-    public List<Abbreviation> Parse(String CSV, String separator, String depseparator) throws CantParseException, ColumnsNotFoundException, DepartmentColumnsNotFoundException, DepartmentDoesntExistException {
-        // parse csv
+    public List<Abbreviation> parseCSV(String CSV, String separator, String depSeperator) throws CantParseException, DepartmentColumnsNotFoundException, DepartmentDoesntExistException, ColumnsNotFoundException {
         List<HashMap<String, Object>> parsedCsv = CSVtoMap(CSV, separator);
+        checkForMissingColumns(parsedCsv);
+        return createAbbreviationListFromHashMap(parsedCsv, depSeperator);
+    }
 
-        // check for columns
+    private void checkForMissingColumns(List<HashMap<String, Object>> parsedCsv) throws ColumnsNotFoundException {
         List<String> missingColumns = new ArrayList<>();
-        if (!parsedCsv.get(0).containsKey("abbreviation_name")) {
+        HashMap<String, Object> columnName = parsedCsv.get(0);
+        if (columnName.containsKey("abbreviation_name")) {
             missingColumns.add("abbreviation_name");
         }
-        if (!parsedCsv.get(0).containsKey("definition")) {
+        if (!columnName.containsKey("definition")) {
             missingColumns.add("definition");
         }
-        if (!parsedCsv.get(0).containsKey("departments")) {
+        if (!columnName.containsKey("departments")) {
             missingColumns.add("departments");
         }
         if (missingColumns.size() > 0) {
             throw new ColumnsNotFoundException(missingColumns);
         }
+    }
 
-        // get abbreviations
+    private List<Abbreviation> createAbbreviationListFromHashMap(List<HashMap<String, Object>> parsedCsv, String depSeparator) throws DepartmentColumnsNotFoundException, DepartmentDoesntExistException {
         List<Abbreviation> abbreviations = new ArrayList<>();
-
         for (HashMap<String, Object> entry : parsedCsv) {
-            // get departments
             Set<Department> departments = new ManagedSet<>();
-            String[] departmentStringList = entry.get("departments").toString().split(depseparator);
+            String[] departmentStringList = entry.get("departments").toString().split(depSeparator);
             System.out.println(departmentStringList.length);
 
             for (String departmentString : departmentStringList) {
-                //check if departmentList
                 if (departmentString.length() < 1) {
-                    throw new DepartmentColumnsNotFoundException(entry.get("departments").toString(), depseparator);
+                    throw new DepartmentColumnsNotFoundException(entry.get("departments").toString(), depSeparator);
                 }
 
                 Department department = DEPARTMENTCONTROLLER.getDepartmentByDepartmentName(departmentString);
@@ -156,4 +157,54 @@ public class CSVParser {
         }
         return abbreviations;
     }
+//    This method has been refactored for the clean code assignment
+
+//    public List<Abbreviation> Parse(String CSV, String separator, String depseparator) throws CantParseException, ColumnsNotFoundException, DepartmentColumnsNotFoundException, DepartmentDoesntExistException {
+//        // parse csv
+//        List<HashMap<String, Object>> parsedCsv = CSVtoMap(CSV, separator);
+//
+//        // check for columns
+//        List<String> missingColumns = new ArrayList<>();
+//        if (!parsedCsv.get(0).containsKey("abbreviation_name")) {
+//            missingColumns.add("abbreviation_name");
+//        }
+//        if (!parsedCsv.get(0).containsKey("definition")) {
+//            missingColumns.add("definition");
+//        }
+//        if (!parsedCsv.get(0).containsKey("departments")) {
+//            missingColumns.add("departments");
+//        }
+//        if (missingColumns.size() > 0) {
+//            throw new ColumnsNotFoundException(missingColumns);
+//        }
+//
+//        // get abbreviations
+//        List<Abbreviation> abbreviations = new ArrayList<>();
+//
+//        for (HashMap<String, Object> entry : parsedCsv) {
+//            // get departments
+//            Set<Department> departments = new ManagedSet<>();
+//            String[] departmentStringList = entry.get("departments").toString().split(depseparator);
+//            System.out.println(departmentStringList.length);
+//
+//            for (String departmentString : departmentStringList) {
+//                //check if departmentList
+//                if (departmentString.length() < 1) {
+//                    throw new DepartmentColumnsNotFoundException(entry.get("departments").toString(), depseparator);
+//                }
+//
+//                Department department = DEPARTMENTCONTROLLER.getDepartmentByDepartmentName(departmentString);
+//                departments.add(department);
+//
+//            }
+//
+//            abbreviations.add(new Abbreviation(
+//                    departments,
+//                    (String) entry.get("abbreviation_name"),
+//                    (String) entry.get("definition"),
+//                    new Timestamp(Calendar.getInstance().getTime().getTime())
+//            ));
+//        }
+//        return abbreviations;
+//    }
 }
