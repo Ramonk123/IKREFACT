@@ -17,25 +17,15 @@ import java.util.UUID;
 @Transactional
 public interface GameRepository extends JpaRepository<GameScore, UUIDBinaryType> {
 
-    @Query(value = "SELECT ID, username, MAX(score) AS score, depID FROM gamescore WHERE depID = :depid GROUP BY username ORDER BY score DESC LIMIT :limit ;", nativeQuery = true)
-    List<GameScore> findAllLimitDistinctFiltered(@Param("limit") int limit, @Param("depid") UUID depid);
 
-    @Query(value = "SELECT * FROM gamescore WHERE depID = :depid ORDER BY score DESC LIMIT :limit ;", nativeQuery = true)
-    List<GameScore> findAllLimitFiltered(@Param("limit") int limit, @Param("depid") UUID depid);
-
-    @Query(value = "SELECT * FROM gamescore WHERE depID = :depid ORDER BY score DESC;", nativeQuery = true)
+    @Query(value = "SELECT * FROM gamescore WHERE depID = :depid ORDER BY score DESC LIMIT 10;", nativeQuery = true)
     List<GameScore> findAllFiltered(@Param("depid") UUID depid);
 
-    @Query(value = "SELECT * FROM gamescore ORDER BY score DESC LIMIT :limit ;", nativeQuery = true)
-    List<GameScore> findAllLimit(@Param("limit") int limit);
 
-    @Query(value = "SELECT ID, username, MAX(score) AS score, depID FROM gamescore GROUP BY username ORDER BY score DESC LIMIT :limit ;", nativeQuery = true)
-    List<GameScore> findAllLimitDistinct(@Param("limit") int limit);
-
-    @Query(value = "SELECT ID, username, MAX(score) AS score, depID FROM gamescore GROUP BY username ORDER BY score DESC;", nativeQuery = true)
+    @Query(value = "SELECT ID, username, MAX(score) AS score, depID FROM gamescore GROUP BY username ORDER BY score DESC LIMIT 10;", nativeQuery = true)
     List<GameScore> findAllDistinct();
 
-    @Query(value = "SELECT COUNT(*) FROM abbreviation WHERE :abbreviation = abbreviation_name AND :description = definition;", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM abbreviation WHERE :abbreviation = abbreviation_name AND :description = definition LIMIT 10;", nativeQuery = true)
     int checkAnswer(@Param("abbreviation") String abbreviation, @Param("description") String description);
 
     Optional<GameScore> findGameScoreById(UUID id);

@@ -26,21 +26,10 @@ public class GameDAO {
 
     public List<GameScore> getScores() {return GAME_REPOSITORY.findAll();}
 
-    public List<GameScore> getScoresLimitDistinctFiltered(int limit, UUID depID) {
-        return GAME_REPOSITORY.findAllLimitDistinctFiltered(limit, depID);
-    }
-
-    public List<GameScore> getScoresLimitFiltered(int limit, UUID depID) {
-        return GAME_REPOSITORY.findAllLimitFiltered(limit, depID);
-    }
-
     public List<GameScore> getScoresFiltered(UUID depID) {
         return GAME_REPOSITORY.findAllFiltered(depID);
     }
 
-    public List<GameScore> getScoresLimitDistinct(int limit) {return GAME_REPOSITORY.findAllLimitDistinct(limit);}
-
-    public List<GameScore> getScoresLimit(int limit) {return GAME_REPOSITORY.findAllLimit(limit);}
 
     /**
      * @author Max Mulder
