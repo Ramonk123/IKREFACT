@@ -98,11 +98,7 @@ public class AdminController {
 //     * @param id
 //     * @return
 //     */
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Response> removeAdmin(@PathVariable UUID id) {
-//        ADMIN_DAO.deleteAdmin(id);
-//        return ResponseEntity.ok(new Response("removed admin"));
-//    }
+
     @Secured("ROLE_SUPER_ADMIN")
     @DeleteMapping("/{email}")
     public ResponseEntity<Response> removeAdmin(@PathVariable String email) {

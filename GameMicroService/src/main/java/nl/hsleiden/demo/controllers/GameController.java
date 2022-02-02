@@ -64,9 +64,7 @@ public class GameController {
 //            return GAME_DAO.getScores();
 //        }
     @GetMapping("/scoreboard")
-    public List<GameScore> getScores(
-            @RequestParam(value = "filter", required = false) Optional<UUID> depFilter
-    ) {
+    public List<GameScore> getScores(@RequestParam(value = "filter", required = false) Optional<UUID> depFilter) {
         boolean isFiltered = depFilter.isPresent();
 
         if (isFiltered) {
