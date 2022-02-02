@@ -34,13 +34,12 @@ public class ReportController {
 
     private final ReportDAO REPORT_DAO;
     private final AbbreviationDAO ABBREVIATION_DAO;
-    private final GameDAO GAME_DAO;
+    private final String GAME_API = "http://localhost:8444/scoreboard/";
 
     @Autowired
-    public ReportController(ReportDAO reportDAO, AbbreviationDAO abbreviationDAO, GameDAO gameDAO) {
+    public ReportController(ReportDAO reportDAO, AbbreviationDAO abbreviationDAO) {
         this.REPORT_DAO = reportDAO;
         this.ABBREVIATION_DAO = abbreviationDAO;
-        this.GAME_DAO = gameDAO;
     }
 
     /**
@@ -49,17 +48,13 @@ public class ReportController {
      * @return
      */
     @GetMapping("/abbreviation")
-    public List<HashMap<String, Object>> getAbbreviationReports() {
-        // casting the tuple map to a hashmap
-        List<HashMap<String, Object>> result = new ArrayList<>();
+    public List<Map<String, Object>> getAbbreviationReports() {
+        List<Map<String, Object>> result = new ArrayList<>();
+
         for (Map<String, Object> map : REPORT_DAO.getAbbreviationReports()) {
-            HashMap<String, Object> entry = new HashMap<>();
-            for (String key : map.keySet()) {
-                entry.put(key, map.get(key));
-            }
-            entry.put("abbreviation", ABBREVIATION_DAO.findAbbreviationById(UUID.fromString((String) entry.get("abbreviation_id"))));
-            entry.remove("abbreviation_id");
-            result.add(entry);
+            map.put("abbreviation", ABBREVIATION_DAO.findAbbreviationById(UUID.fromString((String) map.get("abbreviation_id"))));
+            map.remove("abbreviation_id");
+            result.add(map);
         }
         return result;
     }
@@ -103,20 +98,13 @@ public class ReportController {
      * @return
      */
     @GetMapping("/gamescore")
-    public List<HashMap<String, Object>> getGameScoreReports() {
-        // casting the tuple map to a hashmap
-        List<HashMap<String, Object>> result = new ArrayList<>();
+    public List<Map<String, Object>> getGameScoreReports() {
+        List<Map<String, Object>> result = new ArrayList<>();
 
         for (Map<String, Object> map : REPORT_DAO.getGameScoreReports()) {
-            HashMap<String, Object> entry = new HashMap<>();
-            for (String key : map.keySet()) {
-                entry.put(key, map.get(key));
-            }
 
-            // Code smell?
-            String URL = "http://localhost:8444/scoreboard/";
             try {
-                HttpResponse<JsonNode> request = Unirest.get(URL+ map.get("game_score_id")).asJson();
+                HttpResponse<JsonNode> request = Unirest.get(GAME_API+map.get("game_score_id")).asJson();
                 JSONObject jsonObject = request.getBody().getObject();
 
                 GameScore gameScore = new GameScore(
@@ -124,14 +112,12 @@ public class ReportController {
                         jsonObject.getString("username"),
                         jsonObject.getInt("score")
                 );
-                entry.put("game_score", gameScore);
+                map.put("game_score", gameScore);
             } catch (UnirestException e) {
                 e.printStackTrace();
             }
-            entry.remove("game_score_id");
-
-            result.add(entry);
-
+            map.remove("game_score_id");
+            result.add(map);
         }
         return result;
     }

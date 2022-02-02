@@ -44,7 +44,7 @@ public class DepartmentController {
     @PostMapping
     @Secured("ROLE_ADMIN")
     public List<Department> postDepartment(@RequestBody List<Department> departments) throws DepartmentNotFoundException {
-        // check if departments empty
+
         if (departments.isEmpty()) {throw new DepartmentNotFoundException();}
         return DEPARTMENT_DAO.postDepartment(departments);
     }
